@@ -66,7 +66,6 @@ Add the dependency:
 		<td>setCustomStyle</td>
 		<td>This will override all the propeties sets</td>
 	</tr>
-	
 	<tr>
 		<td>showToast</td>
 		<td>Finally shows the toast messege</td>
