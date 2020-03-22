@@ -34,3 +34,11 @@ Add the dependency:
             .showToast()
  </code></pre>
 
+
+### Methods ###
+
+<table>
+    <tr>
+        <td>Foo</td>
+    </tr>
+</table>
