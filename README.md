@@ -30,9 +30,32 @@ Add the dependency:
  
  <pre><code>
  val mCtoast = Ctoast(this)
-  mCtoast.title("check")
+ mCtoast.title("check")
             .showToast()
  </code></pre>
+
+
+## Using default custom style ##
+
+<pre><code>
+ val mCtoast = Ctoast(this)
+ mCtoast.title("check")
+            .setCustomStyle(CustomStyles.STYLE_SUCCESS_CURVED)
+            .showToast()
+</code></pre>
+
+## Customizing with your style ##
+<pre><code>
+val mCtoast = Ctoast(this)
+ mCtoast.title("check")
+            .setBackGroundColor(R.color.materialRed)
+            .showToastImage(true)
+            .textColor(R.color.materialWhite)
+            .setBoldText(true)
+            .showToast()
+</code></pre>
+
+
 
 
 ### Methods ###
