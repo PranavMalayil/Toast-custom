@@ -38,7 +38,37 @@ Add the dependency:
 ### Methods ###
 
 <table>
-    <tr>
-        <td>Foo</td>
+	<tr>
+	<th>title</th>
+	<th>Action</th>
     </tr>
+	<tr>
+		<td>title</td>
+		<td>Set the toast messege text</td>
+	</tr>
+		<tr>
+		<td>setBoldText</td>
+		<td>Set the toast messege as bold text</td>
+	</tr>
+		<tr>
+		<td>textColor</td>
+		<td>Set the color of toast messege</td>
+	</tr>
+		<tr>
+		<td>showToastImage</td>
+		<td>Show toast messege with image</td>
+	</tr>
+	<tr>
+		<td>setBackGroundColor</td>
+		<td>Set the background color of toast messege</td>
+	</tr>
+	<tr>
+		<td>setCustomStyle</td>
+		<td>This will override all the propeties sets</td>
+	</tr>
+	
+	<tr>
+		<td>showToast</td>
+		<td>Finally shows the toast messege</td>
+	</tr>
 </table>
