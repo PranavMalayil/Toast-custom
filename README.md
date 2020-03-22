@@ -5,7 +5,7 @@ A simple toast library to show custom toasts
   
   
 ## How to ##
-To get a Git project into your build:
+To get project into your build:
 
 Step 1. Add the JitPack repository to your build file
 
