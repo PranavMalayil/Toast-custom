@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="materialRed">#FF1744</color>
+    <color name="materialBlue">#651FFF</color>
+    <color name="materialOrange">#FF3D00</color>
+    <color name="materialGreen">#43A047</color>
+    <color name="materialConfuse">#00838F</color>
+    <color name="materialWhite">#FFF</color>
+    <color name="materialWarning">#778897</color>
+    <color name="materialInfo">#FFA000</color>
+    
+</resources>
