@@ -23,3 +23,14 @@ Add the dependency:
  { 
     implementation 'com.github.PranavMalayil:Toast-custom:1.0'
  }</code></pre>
+ 
+ #Example#
+ 
+ ##Kotlin##
+ 
+ <pre><code>
+ val mCtoast = Ctoast(this)
+  mCtoast.title("check")
+            .showToast()
+ </code></pre>
+
