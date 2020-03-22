@@ -10,9 +10,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.pranavs.toastlibrary.utils.AppUtils
 import java.lang.ref.WeakReference
 
-class Ctoast {
+class Ctoast(private val getMContext: Activity) {
 
     var SUCCESS = 1
     var WARNING = 2
@@ -20,7 +21,7 @@ class Ctoast {
     var INFO = 4
     var DEFAULT = 5
     var CONFUSING = 6
-
+    //
     internal var mContext: WeakReference<Activity>? = null
     internal var mDuration: Int = 0
     internal var mToastMessege: String? = null
@@ -29,9 +30,12 @@ class Ctoast {
     internal var mIsImageVisible: Boolean = false
     var mCustomStyleIsCalled: Boolean = false
     internal var isBoldText: Boolean = false
+    internal var mCustomStyles: CustomStyles? = null
 
-    constructor(mContext: Activity) {
-        this.mContext = WeakReference(mContext)
+    init {
+        this.mContext = WeakReference(getMContext)
+        mBackGroundColor = ContextCompat.getColor(mContext!!.get()!!, R.color.materialBlue)
+        mTextColor = ContextCompat.getColor(mContext!!.get()!!, R.color.materialWhite)
     }
 
     /**
@@ -88,45 +92,7 @@ class Ctoast {
      */
     fun setCustomStyle(mStyle: CustomStyles): Ctoast {
         mCustomStyleIsCalled = true
-        this.mBackGroundColor = when (mStyle) {
-            CustomStyles.STYLE_MESSEGE -> {
-                ContextCompat.getColor(
-                    mContext!!.get()!!,
-                    R.color.materialBlue
-                )
-            }
-            CustomStyles.STYLE_ERROR -> ContextCompat.getColor(
-                mContext!!.get()!!,
-                R.color.materialOrange
-            )
-            CustomStyles.STYLE_NORMAL -> ContextCompat.getColor(
-                mContext!!.get()!!,
-                R.color.materialWhite
-            )
-            CustomStyles.STYLE_CONFUSE ->
-                ContextCompat.getColor(
-                    mContext!!.get()!!,
-                    R.color.materialConfuse
-                )
-            CustomStyles.STYLE_WARNING ->
-                ContextCompat.getColor(
-                    mContext!!.get()!!,
-                    R.color.materialWarning
-                )
-            CustomStyles.STYLE_SUCCESS ->
-                ContextCompat.getColor(
-                    mContext!!.get()!!,
-                    R.color.materialGreen
-                )
-            CustomStyles.STYLE_INFO ->
-                ContextCompat.getColor(
-                    mContext!!.get()!!,
-                    R.color.materialInfo
-                )
-            else -> ContextCompat.getColor(
-                mContext!!.get()!!, R.color.materialWhite
-            )
-        }
+        mCustomStyles = mStyle
         return this
     }
 
@@ -147,7 +113,18 @@ class Ctoast {
         if (mCustomStyleIsCalled) {
             mTextColor = ContextCompat.getColor(mContext!!.get()!!, R.color.materialWhite)
             textView.setTextColor(mTextColor!!)
+            val mDrawbleSelection = DrawbleSelection(
+                mContext = mContext!!.get()!!,
+                mCustomStyles = mCustomStyles!!
+            ).drawItem()
+            textViewRoot.background = mDrawbleSelection
         } else {
+            mBackGroundColor!!.let {
+                textViewRoot.background =
+                    AppUtils(mContext = mContext!!.get()!!).getDrawableWithBlendMode(
+                        mBackGroundColor!!
+                    )
+            }
             mTextColor!!.let {
                 textView.setTextColor(mTextColor!!)
             }
@@ -157,14 +134,6 @@ class Ctoast {
             if (isBoldText)
                 textView.setTypeface(Typeface.DEFAULT_BOLD)
             else textView.setTypeface(Typeface.DEFAULT)
-        }
-
-        mBackGroundColor!!.let {
-            val mDrawbleSelection = DrawbleSelection(
-                mContext = mContext!!.get()!!,
-                mBackGroundColor = mBackGroundColor!!
-            ).drawItem()
-            textViewRoot.background = mDrawbleSelection
         }
 
         val mytoastView = Toast(mContext!!.get())
