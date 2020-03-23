@@ -21,7 +21,7 @@ Step 2.
 Add the dependency:
 <pre><code>dependencies
  { 
-    implementation 'com.github.PranavMalayil:Toast-custom:1.02'
+    implementation 'com.github.PranavMalayil:Toast-custom:1.03'
  }</code></pre>
  
  # Example #
