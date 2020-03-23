@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         mCtoast.title("check")
             .setBackGroundColor(R.color.materialRed)
             .textColor(R.color.materialWhite)
-            .setBoldText(false)
+            .setBoldText(true)
             .setCustomStyle(CustomStyles.STYLE_ERROR_CURVED)
             .showToast()
 

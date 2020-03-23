@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.DisplayMetrics
@@ -23,13 +24,13 @@ class AppUtils(private val mContext: Context) {
      * @return
      */
     fun getDrawableWithBlendMode(mDrawbleGet: Int, green: Int): Drawable? {
-        val mDrawable = ContextCompat.getDrawable(mContext, mDrawbleGet)
+        val mDrawable = ContextCompat.getDrawable(mContext, mDrawbleGet)!!.mutate()
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            mDrawable!!.colorFilter = BlendModeColorFilter(green, BlendMode.SRC_ATOP)
+            mDrawable.colorFilter = BlendModeColorFilter(green, BlendMode.SRC_ATOP)
             mDrawable
         } else {
-            mDrawable!!.setColorFilter(
-                green,
+            mDrawable.setColorFilter(
+                ContextCompat.getColor(mContext,green),
                 PorterDuff.Mode.SRC_ATOP
             )
             mDrawable
@@ -41,8 +42,6 @@ class AppUtils(private val mContext: Context) {
      */
     fun getDisplayMatrics(): DisplayMetrics {
         val displayMetrics: DisplayMetrics = mContext.resources.displayMetrics
-        Log.e(TAG, "Size height" + displayMetrics.heightPixels)
-        Log.e(TAG, "Size width" + displayMetrics.widthPixels)
         return displayMetrics
     }
 

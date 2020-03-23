@@ -155,13 +155,12 @@ class Ctoast(private val getMContext: Activity) {
             mTextColor?.let {
                 textView.setTextColor(mTextColor!!)
             }
-            val mDrawbleSelection = DrawbleSelection(
+            textViewRoot.background = DrawbleSelection(
                 mContext = mContext!!.get()!!,
                 mCustomStyles = mCustomStyles!!,
                 isRemoveCurveEnabled = isRemoveCurveEnabled,
                 mCustomStyleIsCalled = mCustomStyleIsCalled
             ).drawItem()
-            textViewRoot.background = mDrawbleSelection
             imageView.background = IconSelector(
                 mContext = mContext!!.get()!!,
                 mCustomStyles = mCustomStyles!!
@@ -192,7 +191,6 @@ class Ctoast(private val getMContext: Activity) {
                 } else imageView.visibility = View.GONE
             }
             mToastIcon?.let {
-                Log.e(Ctoast::class.simpleName, "Check here")
                 if (mToastIcon != null) imageView.background = ContextCompat.getDrawable(
                     mContext!!.get()!!,
                     mToastIcon!!

@@ -9,7 +9,8 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:paddingBottom="8dp"
+    android:background="@drawable/rect_shape_curved">
 
     <ImageView
         android:padding="4dp"

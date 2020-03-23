@@ -3,18 +3,18 @@ package com.pranavs.toastlibrary
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.view.View
+import android.util.Log
 
 class DrawbleSelection(
     private val mContext: Context,
     private val mCustomStyles: CustomStyles,
     private val isRemoveCurveEnabled: Boolean,
     private val mCustomStyleIsCalled: Boolean
-) : View(mContext) {
+) {
+
 
     var drawbleGet: GradientDrawable = GradientDrawable()
     fun drawItem(): Drawable {
-
         val mReturnCustomStyleColor = ReturnCustomStyleColor(mCustomStyles, mContext = mContext)
         if (mReturnCustomStyleColor.isNormalDrawble()) {
             drawbleGet.shape = GradientDrawable.RECTANGLE
