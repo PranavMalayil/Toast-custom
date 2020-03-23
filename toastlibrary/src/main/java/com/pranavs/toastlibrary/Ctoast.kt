@@ -3,14 +3,22 @@ package com.pranavs.toastlibrary
 import android.app.Activity
 import android.graphics.Typeface
 import android.os.CountDownTimer
+import android.util.DisplayMetrics
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import com.pranavs.toastlibrary.utils.AppUtils
+import com.pranavs.toastlibrary.utils.GetToastIconImage
+import com.pranavs.toastlibrary.utils.IconSelector
+import com.pranavs.toastlibrary.utils.SetToastPosition
 import java.lang.ref.WeakReference
 
 class Ctoast(private val getMContext: Activity) {
@@ -24,16 +32,20 @@ class Ctoast(private val getMContext: Activity) {
     //
     internal var mContext: WeakReference<Activity>? = null
     internal var mDuration: Int = 0
+    internal var isRemoveCurveEnabled: Boolean = false
     internal var mToastMessege: String? = null
     internal var mBackGroundColor: Int? = null
+    internal var mCustomGravity: CustomGravity? = null
     internal var mTextColor: Int? = null
     internal var mIsImageVisible: Boolean = false
     var mCustomStyleIsCalled: Boolean = false
     internal var isBoldText: Boolean = false
     internal var mCustomStyles: CustomStyles? = null
+    internal var mToastIcon: Int? = null
 
     init {
         this.mContext = WeakReference(getMContext)
+        mCustomGravity = CustomGravity.GRAVITY_NORMAL
         mBackGroundColor = ContextCompat.getColor(mContext!!.get()!!, R.color.materialBlue)
         mTextColor = ContextCompat.getColor(mContext!!.get()!!, R.color.materialWhite)
     }
@@ -63,6 +75,24 @@ class Ctoast(private val getMContext: Activity) {
         return this
     }
 
+
+    /**
+     * Remove drawble curve
+     */
+    fun setCurveOfToast(isCurveEnabled: Boolean): Ctoast {
+        isRemoveCurveEnabled = !isCurveEnabled
+        return this
+    }
+
+
+    /**
+     * Set user drawable
+     */
+    fun setToastImage(mToastIcon: Int): Ctoast {
+        this.mToastIcon = mToastIcon
+        return this
+    }
+
     /**
      * Set text color
      */
@@ -87,6 +117,16 @@ class Ctoast(private val getMContext: Activity) {
         return this
     }
 
+
+    /**
+     * set gravity of item
+     */
+    fun setGravity(mCustomGravity: CustomGravity): Ctoast {
+        this.mCustomGravity = mCustomGravity
+        return this
+    }
+
+
     /**
      * This method will overide everything
      */
@@ -102,6 +142,7 @@ class Ctoast(private val getMContext: Activity) {
         val layouttoast: View = LayoutInflater.from(mContext!!.get()).inflate(
             R.layout.toast_layout, null, false
         )
+        val imageView: ImageView = layouttoast.findViewById(R.id.imageView)
         val textView =
             layouttoast.findViewById<View>(R.id.texttoast) as TextView
         val textViewRoot =
@@ -115,18 +156,44 @@ class Ctoast(private val getMContext: Activity) {
             textView.setTextColor(mTextColor!!)
             val mDrawbleSelection = DrawbleSelection(
                 mContext = mContext!!.get()!!,
-                mCustomStyles = mCustomStyles!!
+                mCustomStyles = mCustomStyles!!, isRemoveCurveEnabled = isRemoveCurveEnabled
             ).drawItem()
             textViewRoot.background = mDrawbleSelection
+            imageView.background = IconSelector(
+                mContext = mContext!!.get()!!,
+                mCustomStyles = mCustomStyles!!
+            ).getIconObject()
+            imageView.visibility = View.VISIBLE
         } else {
-            mBackGroundColor!!.let {
+            if (isRemoveCurveEnabled)
+                mBackGroundColor!!.let {
+                    textViewRoot.background =
+                        AppUtils(mContext = mContext!!.get()!!).getDrawableWithBlendMode(
+                            R.drawable.rect_shape_normal,
+                            mBackGroundColor!!
+                        )
+                }
+            else mBackGroundColor!!.let {
                 textViewRoot.background =
                     AppUtils(mContext = mContext!!.get()!!).getDrawableWithBlendMode(
+                        R.drawable.rect_shape_curved,
                         mBackGroundColor!!
                     )
             }
-            mTextColor!!.let {
+            mTextColor?.let {
                 textView.setTextColor(mTextColor!!)
+            }
+            mIsImageVisible.let {
+                if (it) {
+                    imageView.visibility = View.VISIBLE
+                } else imageView.visibility = View.GONE
+            }
+            mToastIcon?.let {
+                Log.e(Ctoast::class.simpleName, "Check here")
+                if (mToastIcon != null) imageView.background = ContextCompat.getDrawable(
+                    mContext!!.get()!!,
+                    mToastIcon!!
+                )
             }
         }
 
@@ -136,12 +203,15 @@ class Ctoast(private val getMContext: Activity) {
             else textView.setTypeface(Typeface.DEFAULT)
         }
 
-        val mytoastView = Toast(mContext!!.get())
+        val mytoastView = mCustomGravity!!.let {
+            SetToastPosition(
+                Toast(mContext!!.get()!!), mContext = mContext!!.get()!!,
+                mCustomGravity = mCustomGravity!!, mView = textViewRoot
+            ).setToastMessegeGravity()
+        }
         mytoastView.view = layouttoast
         mytoastView.duration = Toast.LENGTH_LONG
         mytoastView.show()
         return this
     }
-
-
 }

@@ -6,19 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="16dp">
 
     <ImageView
-        android:layout_gravity="center"
         android:id="@+id/imageView"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".5"
-        app:srcCompat="@android:drawable/alert_dark_frame" />
+        app:layout_constraintVertical_bias=".5" />
 
     <TextView
         android:id="@+id/texttoast"
