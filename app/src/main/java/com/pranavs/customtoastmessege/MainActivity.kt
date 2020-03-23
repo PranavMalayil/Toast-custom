@@ -20,8 +20,7 @@ class MainActivity : AppCompatActivity() {
             .setBackGroundColor(R.color.materialRed)
             .textColor(R.color.materialWhite)
             .setBoldText(false)
-            .setCurveOfToast(false)
-            .setGravity(CustomGravity.GRAVITY_TOP_FULL)
+            .setCustomStyle(CustomStyles.STYLE_ERROR_CURVED)
             .showToast()
 
     }

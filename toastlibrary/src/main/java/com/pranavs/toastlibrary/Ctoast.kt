@@ -80,7 +80,7 @@ class Ctoast(private val getMContext: Activity) {
      * Remove drawble curve
      */
     fun setCurveOfToast(isCurveEnabled: Boolean): Ctoast {
-        isRemoveCurveEnabled = !isCurveEnabled
+        isRemoveCurveEnabled = isCurveEnabled
         return this
     }
 
@@ -152,11 +152,14 @@ class Ctoast(private val getMContext: Activity) {
         }
 
         if (mCustomStyleIsCalled) {
-            mTextColor = ContextCompat.getColor(mContext!!.get()!!, R.color.materialWhite)
-            textView.setTextColor(mTextColor!!)
+            mTextColor?.let {
+                textView.setTextColor(mTextColor!!)
+            }
             val mDrawbleSelection = DrawbleSelection(
                 mContext = mContext!!.get()!!,
-                mCustomStyles = mCustomStyles!!, isRemoveCurveEnabled = isRemoveCurveEnabled
+                mCustomStyles = mCustomStyles!!,
+                isRemoveCurveEnabled = isRemoveCurveEnabled,
+                mCustomStyleIsCalled = mCustomStyleIsCalled
             ).drawItem()
             textViewRoot.background = mDrawbleSelection
             imageView.background = IconSelector(
